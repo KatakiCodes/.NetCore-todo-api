@@ -1,10 +1,11 @@
 using System;
 using Flunt.Notifications;
+using Flunt.Validations;
 using TODO.Domain.Commands.Contracts;
 
 namespace TODO.Domain.Commands;
 
-public class CreateTodoItemCommand : ICommand
+public class CreateTodoItemCommand : Notifiable,ICommand
 {
     public CreateTodoItemCommand()
     {}
@@ -21,5 +22,11 @@ public class CreateTodoItemCommand : ICommand
     public DateTime Date { get; set; }
     public void Validate()
     {
+        AddNotifications(
+            new Contract()
+                .Requires()
+                .HasMinLen(Title, 3, "Title", "Descreva melhor a sua tarefa por favor!")
+                .HasMinLen(User, 6, "User", "Inválido!")
+        );
     }
 }
