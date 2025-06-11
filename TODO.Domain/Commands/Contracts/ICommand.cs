@@ -1,8 +1,8 @@
 using System;
-using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace TODO.Domain.Commands.Contracts;
 
-public interface ICommand: INotifiable
+public interface ICommand : IValidatable
 {
 }
