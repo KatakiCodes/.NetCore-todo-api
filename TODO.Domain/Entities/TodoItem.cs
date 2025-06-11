@@ -23,6 +23,10 @@ public class TodoItem : Entity
     }
     public void MarkAsUndone()
     {
+
+    }
+    public void UpdateTitle()
+    {
         
     }
 }
