@@ -19,14 +19,14 @@ public class TodoItem : Entity
 
     public void MarkAsDone()
     {
-
+        this.Done = true;
     }
     public void MarkAsUndone()
     {
-
+        this.Done = false;
     }
-    public void UpdateTitle()
+    public void UpdateTitle(string title)
     {
-        
+        this.Title = title;
     }
 }
