@@ -1,22 +1,23 @@
-﻿using TODO.Domain.Commands;
+﻿using System.Windows.Input;
+using TODO.Domain.Commands;
 
 namespace TODO.Test.CommandTests;
 
 [TestClass]
 public sealed class CreateTodoItemCommandTests
 {
+    private readonly CreateTodoItemCommand _invalidCommand = new ("", "", DateTime.Now);
+    private readonly CreateTodoItemCommand _validCommand = new ("Tarefa 1", "andrebaltieri", DateTime.Now);
     [TestMethod]
     public void Dado_um_comando_invalido()
     {
-        var command = new CreateTodoItemCommand("", "", DateTime.Now);
-        command.Validate();
-        Assert.AreEqual(false, command.Valid);
+        _invalidCommand.Validate();
+        Assert.AreEqual(false, _invalidCommand.Valid);
     }
     [TestMethod]
     public void Dado_um_comando_valido()
     {
-        var command = new CreateTodoItemCommand("Tarefa 1", "andrebaltieri", DateTime.Now);
-        command.Validate();
-        Assert.AreEqual(true, command.Valid);
+        _validCommand.Validate();
+        Assert.AreEqual(true, _validCommand.Valid);
     }
 }
