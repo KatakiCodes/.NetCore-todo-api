@@ -10,4 +10,8 @@
     <ProjectReference Include="..\TODO.Domain\TODO.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="microsoft.entityframeworkcore.inmemory" Version="9.0.6" />
+  </ItemGroup>
+
 </Project>
