@@ -9,11 +9,13 @@ public class MarkTodoItemAsUndoneCommand : Notifiable, ICommand
 {
     public MarkTodoItemAsUndoneCommand()
     {}
-    public MarkTodoItemAsUndoneCommand(string user)
+    public MarkTodoItemAsUndoneCommand(Guid id, string user)
     {
+        Id = id;
         User = user;
     }
 
+    public Guid Id { get; set; }
     public string User { get; set; }
     public void Validate()
     {
