@@ -9,12 +9,14 @@ public class UpdateTodoItemCommand : Notifiable, ICommand
 {
     public UpdateTodoItemCommand()
     {}
-    public UpdateTodoItemCommand(string user, string title)
+    public UpdateTodoItemCommand(Guid Id, string user, string title)
     {
+        this.Id = Id;
         User = user;
         Title = title;
     }
 
+    public Guid Id { get; set; }
     public string User { get; set; }
     public string Title { get; set; }
     public void Validate()
