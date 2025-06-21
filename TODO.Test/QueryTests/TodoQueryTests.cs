@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TODO.Domain.Entities;
 using TODO.Domain.Queries;
 
-namespace Company.TestProject1;
+namespace Company.TodoQueryTests;
 
 [TestClass]
 public class TodoQueryTests
