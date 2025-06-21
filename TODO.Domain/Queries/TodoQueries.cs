@@ -10,6 +10,10 @@ public static class TodoQueries
     {
         return x => x.User == user;
     }
+    public static Expression<Func<TodoItem, bool>> GetById(string user, Guid id)
+    {
+        return x => x.User == user && x.Id == id;
+    }
     public static Expression<Func<TodoItem, bool>> GetAllDone(string user)
     {
         return x => x.User == user && x.Done == true;

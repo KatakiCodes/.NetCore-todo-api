@@ -1,6 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using TODO.Domain.Entities;
+using TODO.Domain.Queries;
 using TODO.Domain.Repositories;
 using TODO.Infra.DataContexts;
 
@@ -23,27 +24,35 @@ public class TodoRepository : ITodoItemRepository
 
     public IEnumerable<TodoItem> GetAll(string user)
     {
-        throw new NotImplementedException();
+        return _DataContext.Todos.AsNoTracking()
+        .Where(TodoQueries.GetAll(user))
+        .OrderBy(c => c.Date);
     }
 
     public IEnumerable<TodoItem> GetAllDone(string user)
     {
-        throw new NotImplementedException();
+        return _DataContext.Todos.AsNoTracking()
+        .Where(TodoQueries.GetAll(user))
+        .OrderBy(c => c.Date);
     }
 
     public IEnumerable<TodoItem> GetAllUndone(string user)
     {
-        throw new NotImplementedException();
+        return _DataContext.Todos.AsNoTracking()
+        .Where(TodoQueries.GetAll(user))
+        .OrderBy(c => c.Date);
     }
 
-    public TodoItem GetById(Guid Id, string User)
+    public TodoItem? GetById(string user, Guid id)
     {
-        throw new NotImplementedException();
+        return _DataContext.Todos.FirstOrDefault(TodoQueries.GetById(user, id));
     }
 
     public IEnumerable<TodoItem> GetByPeriod(string user, DateTime date, bool done)
     {
-        throw new NotImplementedException();
+        return _DataContext.Todos.AsNoTracking()
+        .Where(TodoQueries.GetByPeriod(user, date,done))
+        .OrderBy(c => c.Date);
     }
 
     public void Update(TodoItem todoItem)
