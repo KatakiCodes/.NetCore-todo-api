@@ -40,7 +40,7 @@ public class Handler :
             return new GenericCommandResult(false, "Oops, parece que a sua tarefa está errada!", command.Notifications);
 
         //fazer rehidratação
-        var todo = _TodoItemRepository.GetById(command.Id, command.User);
+        var todo = _TodoItemRepository.GetById(command.User,command.Id);
 
         //salva a tarefa
         _TodoItemRepository.Update(todo);
@@ -57,7 +57,7 @@ public class Handler :
             return new GenericCommandResult(false, "Oops, parece que a sua tarefa está errada!", command.Notifications);
 
         //fazer rehidratação
-        var todo = _TodoItemRepository.GetById(command.Id, command.User);
+        var todo = _TodoItemRepository.GetById(command.User,command.Id);
 
         //Marca a tarefa como concluida
         todo.MarkAsDone();
@@ -77,7 +77,7 @@ public class Handler :
             return new GenericCommandResult(false, "Oops, parece que a sua tarefa está errada!", command.Notifications);
 
         //fazer rehidratação
-        var todo = _TodoItemRepository.GetById(command.Id, command.User);
+        var todo = _TodoItemRepository.GetById(command.User,command.Id);
         todo.MarkAsUndone();
         //Altera a tarefa
         _TodoItemRepository.Update(todo);
