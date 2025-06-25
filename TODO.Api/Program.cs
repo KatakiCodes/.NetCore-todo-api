@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.EntityFrameworkCore;
 using TODO.Domain.Handlers;
 using TODO.Domain.Repositories;
@@ -16,6 +18,18 @@ builder.Services.AddDbContext<DataContext>(option => option.UseInMemoryDatabase(
 builder.Services.AddTransient<ITodoItemRepository, TodoRepository>();
 builder.Services.AddTransient<Handler, Handler>();
 builder.Services.AddSwaggerGen();
+
+//Add google authentication
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+}).AddCookie().AddGoogle(option =>
+{
+    option.ClientId = builder.Configuration["Authentication:Google:Client_Id"];
+    option.ClientSecret = builder.Configuration["Authentication:Google:Client_Secret"];
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,5 +42,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
