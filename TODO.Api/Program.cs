@@ -1,6 +1,9 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using TODO.Api.Services;
 using TODO.Domain.Handlers;
 using TODO.Domain.Repositories;
 using TODO.Infra.DataContexts;
@@ -16,18 +19,55 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(option => option.UseInMemoryDatabase("Database"));
 
 builder.Services.AddTransient<ITodoItemRepository, TodoRepository>();
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<Handler, Handler>();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // Configura o esquema de segurança
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Insira o token JWT assim: Bearer {seu_token}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
 
-//Add google authentication
-builder.Services.AddAuthentication(option =>
+    // Aplica o esquema de segurança globalmente
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
+});
+
+//Add authentication
+builder.Services.AddAuthentication(opt =>
 {
-    option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    option.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-}).AddCookie().AddGoogle(option =>
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(opt =>
 {
-    option.ClientId = builder.Configuration["Authentication:Google:Client_Id"];
-    option.ClientSecret = builder.Configuration["Authentication:Google:Client_Secret"];
+    opt.SaveToken = true;
+    opt.RequireHttpsMetadata = true;
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+
+    };
 });
 
 var app = builder.Build();

@@ -11,6 +11,7 @@ namespace TODO.Api.Controllers
 {
     [Route("api/v1/todos")]
     [ApiController]
+    [Authorize]
     public class TodoController : ControllerBase
     {
         private readonly ITodoItemRepository _ITodoItemRepository;
@@ -22,7 +23,6 @@ namespace TODO.Api.Controllers
 
 
         [HttpGet("")]
-        [Authorize]
         [ProducesResponseType(typeof(IEnumerable<TodoItem>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<TodoItem>> GetAll(string user)
@@ -55,7 +55,7 @@ namespace TODO.Api.Controllers
             var date = DateTime.Today.AddDays(1);
             return Ok(_ITodoItemRepository.GetByPeriod(user, date, done));
         }
-        
+
         [HttpPost("")]
         [ProducesResponseType(typeof(GenericCommandResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -65,7 +65,7 @@ namespace TODO.Api.Controllers
         )
         {
             createTodoItemCommand.User = "nelsondossantos";
-            return Created("TodoItem",(GenericCommandResult)handler.Handle(createTodoItemCommand));
+            return Created("TodoItem", (GenericCommandResult)handler.Handle(createTodoItemCommand));
         }
         [HttpPut("")]
         [ProducesResponseType(typeof(GenericCommandResult), StatusCodes.Status200OK)]
@@ -76,7 +76,7 @@ namespace TODO.Api.Controllers
         )
         {
             updateTodoItemCommand.User = "nelsondossantos";
-            return Created("TodoItem",(GenericCommandResult)handler.Handle(updateTodoItemCommand));
+            return Created("TodoItem", (GenericCommandResult)handler.Handle(updateTodoItemCommand));
         }
     }
 }

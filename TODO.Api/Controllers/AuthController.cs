@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Google.Apis.Auth;
+using TODO.Api.Services;
 
 namespace TODO.Api.Controllers
 {
@@ -16,23 +17,25 @@ namespace TODO.Api.Controllers
             this._Configuration = configuration;
         }
 
-        [HttpPost("google-login")]
+        [HttpPost("google")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<string>> GoogleLogin([FromBody] string tokenId)
+        public async Task<ActionResult<string>> GoogleAuth(
+        [FromServices] ITokenService tokenService, [FromBody]string tokenId)
         {
             try
             {
                 var payload = await GoogleJsonWebSignature.ValidateAsync(tokenId, new GoogleJsonWebSignature.ValidationSettings
                 {
-                    Audience = [_Configuration["Authentication:Google:Cliente_Id"]]
+                    Audience = [_Configuration["Authentication:Google:Client_Id"]]
                 });
-                return Ok(payload.Subject);
+                string token = tokenService.GenerateToken(payload.Subject, payload.Name);
+                return Ok(token);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Unauthorized("Token invalido");
+                return Unauthorized("Token invalido "+ex.Message);
             }
         }
     }
