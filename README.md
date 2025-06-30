@@ -1,18 +1,21 @@
-# BALTA-7198-TODO-API
-Projeto criado com base o curso 7198 do BALTA.io
+# .NETCORE-TODO-API
 
 ## Sobre o Projeto
 
-[in progress]
+Este projeto consiste em uma API desenvolvida com o objetivo de gerênciar tarefas por meio de registo de tarefas, filtragens e ações como: Marcar como conluida e marcar como não concluida
 
 ## Objetivo
 
-[in progress]
+Projeto desenvolvido para uso pessoal, assim como para outros interessados em gerênciar tarefas de forma simples, ou até mesmo colocar em prática conhecimentos sobre desenvolvimento web ou até mesmo outras formas de estudo
 
 ## Outros Conhecimentos Postos em Prática
 
-[in progress]
-
+Com este projeto foi possível por em prática conceitos como:
+* ** ### Arquitetura limpa
+- Embora que o nível dimensional do projeto sugira padrões arquiteturais ou uma extruturação mais simples, usei a arquitetura limpa para fins de estudo e obtênção de conhecimento prático sobre o assunto
+* ** ### Padrão CQRS
+- Assim como a arquitetura limpa o padrão CQRS foi colocado em prática para fins de estudo conhecimento prático sobre o assunto, pois por mais que pequeno que o projeto venha a ser, conceitos como validações, separação de responsabilidades quanto a escrita e leitura de dados e o desacoplamento entre camadas veem sempre garantir o crescimento ou incrementação de funcionalidades novas na aplicação de forma saudável.
+  
 ## Como Executar a API (.NET 9 e ASP.NET Core)
 
 A seguir, estão os passos e comandos necessários para executar uma API .NET 9 e ASP.NET Core recém baixada do GitHub em seu ambiente local.
@@ -26,7 +29,7 @@ A seguir, estão os passos e comandos necessários para executar uma API .NET 9 
 1.  **Navegue até o diretório do projeto:** Abra o terminal ou prompt de comando e navegue até a pasta onde os arquivos do projeto foram clonados do GitHub. Por exemplo:
 
     ```bash
-    cd balta-7198-todo-api
+    cd .NETCORE-TODO-API
     ```
 
 2.  **Restaure as dependências NuGet:** Este comando baixa todas as bibliotecas e pacotes necessários definidos no arquivo `.csproj` do seu projeto.
