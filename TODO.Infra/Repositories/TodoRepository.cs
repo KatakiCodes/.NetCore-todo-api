@@ -22,33 +22,33 @@ public class TodoRepository : ITodoItemRepository
         _DataContext.SaveChanges();
     }
 
-    public IEnumerable<TodoItem> GetAll(string user)
+    public IEnumerable<TodoItem> GetAll(Guid user)
     {
         return _DataContext.Todos.AsNoTracking()
         .Where(TodoQueries.GetAll(user))
         .OrderBy(c => c.Date);
     }
 
-    public IEnumerable<TodoItem> GetAllDone(string user)
+    public IEnumerable<TodoItem> GetAllDone(Guid user)
     {
         return _DataContext.Todos.AsNoTracking()
         .Where(TodoQueries.GetAll(user))
         .OrderBy(c => c.Date);
     }
 
-    public IEnumerable<TodoItem> GetAllUndone(string user)
+    public IEnumerable<TodoItem> GetAllUndone(Guid user)
     {
         return _DataContext.Todos.AsNoTracking()
         .Where(TodoQueries.GetAll(user))
         .OrderBy(c => c.Date);
     }
 
-    public TodoItem? GetById(string user, Guid id)
+    public TodoItem? GetById(Guid user, Guid id)
     {
         return _DataContext.Todos.FirstOrDefault(TodoQueries.GetById(user, id));
     }
 
-    public IEnumerable<TodoItem> GetByPeriod(string user, DateTime date, bool done)
+    public IEnumerable<TodoItem> GetByPeriod(Guid user, DateTime date, bool done)
     {
         return _DataContext.Todos.AsNoTracking()
         .Where(TodoQueries.GetByPeriod(user, date,done))
