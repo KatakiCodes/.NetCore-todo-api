@@ -17,7 +17,7 @@ public class TokenService : ITokenService
     {
         this._TokenHandler = new JwtSecurityTokenHandler();
         this._configuration = configuration;
-        this._SecretKey = configuration["Jwt:SecretKey"];
+        this._SecretKey = configuration.GetSection("Jwt:SecretKey").Value;
     }
     public string GenerateToken(string id, string name)
     {
@@ -33,6 +33,7 @@ public class TokenService : ITokenService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
+            Issuer = _configuration.GetSection("Jwt:Issuer").Value,
             SigningCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature),
             Expires = DateTime.UtcNow.AddHours(1)
         };
