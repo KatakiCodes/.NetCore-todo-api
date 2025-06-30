@@ -20,9 +20,9 @@ Com este projeto foi possível por em prática conceitos como:
   
   Assim como a arquitetura limpa o padrão CQRS foi colocado em prática para fins de estudo e conhecimento prático sobre o assunto, pois por mais pequeno que o projeto venha a ser, conceitos como validações, separação de responsabilidades quanto a escrita e leitura de dados e o desacoplamento entre camadas veem sempre garantir o crescimento ou incrementação de funcionalidades novas na aplicação de forma saudável.
 
-- Autênticação via Token e Google (Jwt bearer)
+- Autenticação via Token e Google (Jwt bearer)
 
-  Neste projeto usou-se o conceito de autênticação e autorização por meio da implementação do JwtBearer e o google.auth.api para validar tokens provenientes de autênticação com o google
+  Neste projeto usou-se o conceito de Autenticação e autorização por meio da implementação do JwtBearer e o google.auth.api para validar tokens provenientes de Autenticação com o google
   
 ## Como Executar a API (.NET 9 e ASP.NET Core)
 
