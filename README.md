@@ -11,10 +11,18 @@ Projeto desenvolvido para uso pessoal, assim como para outros interessados em ge
 ## Outros Conhecimentos Postos em Prática
 
 Com este projeto foi possível por em prática conceitos como:
-* ** ### Arquitetura limpa
-- Embora que o nível dimensional do projeto sugira padrões arquiteturais ou uma extruturação mais simples, usei a arquitetura limpa para fins de estudo e obtênção de conhecimento prático sobre o assunto
-* ** ### Padrão CQRS
-- Assim como a arquitetura limpa o padrão CQRS foi colocado em prática para fins de estudo conhecimento prático sobre o assunto, pois por mais que pequeno que o projeto venha a ser, conceitos como validações, separação de responsabilidades quanto a escrita e leitura de dados e o desacoplamento entre camadas veem sempre garantir o crescimento ou incrementação de funcionalidades novas na aplicação de forma saudável.
+
+- Arquitetura limpa
+  
+  Embora que o nível dimensional do projeto sugira padrões arquiteturais ou uma extruturação mais simples, usei a arquitetura limpa para fins de estudo e obtênção de conhecimento prático sobre o assunto
+
+- Padrão CQRS
+  
+  Assim como a arquitetura limpa o padrão CQRS foi colocado em prática para fins de estudo e conhecimento prático sobre o assunto, pois por mais pequeno que o projeto venha a ser, conceitos como validações, separação de responsabilidades quanto a escrita e leitura de dados e o desacoplamento entre camadas veem sempre garantir o crescimento ou incrementação de funcionalidades novas na aplicação de forma saudável.
+
+- Autênticação via Token e Google (Jwt bearer)
+
+  Neste projeto usou-se o conceito de autênticação e autorização por meio da implementação do JwtBearer e o google.auth.api para validar tokens provenientes de autênticação com o google
   
 ## Como Executar a API (.NET 9 e ASP.NET Core)
 
