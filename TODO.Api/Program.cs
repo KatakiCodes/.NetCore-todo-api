@@ -16,39 +16,42 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 //Soving dependencies
-builder.Services.AddDbContext<DataContext>(option => option.UseInMemoryDatabase("Database"));
+builder.Services.AddDbContext<DataContext>(option => option.UseSqlite("Data Source=DatabaseFile.db"));
 
 builder.Services.AddTransient<ITodoItemRepository, TodoRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<Handler, Handler>();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Configura o esquema de segurança
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "Insira o token JWT assim: Bearer {seu_token}",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApi", Version = "v1" });
 
-    // Aplica o esquema de segurança globalmente
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
-    });
-});
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() 
+    { 
+        Name = "Authorization", 
+        Type = SecuritySchemeType.ApiKey, 
+        Scheme = "Bearer", 
+        BearerFormat = "JWT", 
+        In = ParameterLocation.Header, 
+        Description = @"JWT Authorization header using the Bearer scheme.
+       \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.
+        \r\n\r\nExample: Bearer 12345abcdef", 
+    }); 
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement 
+    { 
+        { 
+              new OpenApiSecurityScheme 
+              { 
+                  Reference = new OpenApiReference 
+                  { 
+                      Type = ReferenceType.SecurityScheme, 
+                      Id = "Bearer" 
+                  } 
+              }, 
+             new string[] {} 
+        } 
+    }); 
+}); 
 
 //Add authentication
 builder.Services.AddAuthentication(opt =>
@@ -63,9 +66,9 @@ builder.Services.AddAuthentication(opt =>
     {
         ValidateIssuer = true,
         ValidateAudience = false,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:SecretKey").Value))
 
     };
 });
@@ -80,9 +83,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
+app.UseHttpsRedirection();
 
 app.Run();

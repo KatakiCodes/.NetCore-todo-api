@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using TODO.Domain.Entities;
 
@@ -9,12 +8,15 @@ public class DataContext : DbContext
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+    }
+
     public DbSet<TodoItem> Todos { get; set; }
+    public DbSet<User> Users { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TodoItem>().Property(x => x.Id);
-        modelBuilder.Entity<TodoItem>().Property(x => x.User).HasMaxLength(120);
         modelBuilder.Entity<TodoItem>().Property(x => x.Title).HasMaxLength(160);
-        modelBuilder.Entity<TodoItem>().HasIndex(b=>b.User);
     }
 }
