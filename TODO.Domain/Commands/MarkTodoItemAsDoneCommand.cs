@@ -6,14 +6,22 @@ namespace TODO.Domain.Commands.Contracts;
 
 public class MarkTodoItemAsDoneCommand : Notifiable,ICommand
 {
+    public MarkTodoItemAsDoneCommand()
+    {}
+    public MarkTodoItemAsDoneCommand(Guid id, Guid user_id)
+    {
+        Id = id;
+        User_id = user_id;
+    }
+
     public Guid Id { get; set; }
-    public string User { get; set; } = string.Empty;
+    public Guid User_id { get; set; }
     public void Validate()
     {
         AddNotifications(
             new Contract()
                 .Requires()
-                .HasMinLen(User, 6, "User", "Inválido!")
+                .IsNotNull(User_id, "User", "Inválido!")
         );
     }
 }

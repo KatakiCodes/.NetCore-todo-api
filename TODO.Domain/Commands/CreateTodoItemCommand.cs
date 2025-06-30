@@ -10,15 +10,15 @@ public class CreateTodoItemCommand : Notifiable,ICommand
     public CreateTodoItemCommand()
     {}
 
-    public CreateTodoItemCommand(string title, string user, DateTime date)
+    public CreateTodoItemCommand(string title, Guid user_id, DateTime date)
     {
         Title = title;
-        User = user;
+        User_id = user_id;
         Date = date;
     }
 
     public string Title { get; set; } = string.Empty;
-    public string User { get; set; } = string.Empty;
+    public Guid User_id { get; set; }
     public DateTime Date { get; set; }
     public void Validate()
     {
@@ -26,7 +26,7 @@ public class CreateTodoItemCommand : Notifiable,ICommand
             new Contract()
                 .Requires()
                 .HasMinLen(Title, 3, "Title", "Descreva melhor a sua tarefa por favor!")
-                .HasMinLen(User, 6, "User", "Inválido!")
+                .IsNotNull(User_id, "User", "Inválido!")
         );
     }
 }

@@ -4,18 +4,18 @@ namespace TODO.Domain.Entities;
 
 public class TodoItem : Entity
 {
-    public TodoItem(string title, DateTime date, string user)
+    public TodoItem(string title, DateTime date, Guid user_id)
     {
         Title = title;
         Done = false;
         Date = date;
-        User = user;
+        User_id = user_id;
     }
 
     public string Title { get; private set; } = string.Empty;
     public bool Done { get; private set; }
     public DateTime Date { get; private set; }
-    public string User { get; private set; } = string.Empty;
+    public Guid User_id { get; private set; }
 
     public void MarkAsDone()
     {
@@ -25,8 +25,9 @@ public class TodoItem : Entity
     {
         this.Done = false;
     }
-    public void UpdateTitle(string title)
+    public void Update(string title,DateTime date)
     {
         this.Title = title;
+        this.Date = date;
     }
 }

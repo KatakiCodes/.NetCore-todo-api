@@ -9,20 +9,20 @@ public class MarkTodoItemAsUndoneCommand : Notifiable, ICommand
 {
     public MarkTodoItemAsUndoneCommand()
     {}
-    public MarkTodoItemAsUndoneCommand(Guid id, string user)
+    public MarkTodoItemAsUndoneCommand(Guid id, Guid user_id)
     {
         Id = id;
-        User = user;
+        User_id = user_id;
     }
 
     public Guid Id { get; set; }
-    public string User { get; set; }
+    public Guid User_id { get; set; }
     public void Validate()
     {
         AddNotifications(
             new Contract()
                 .Requires()
-                .HasMinLen(User, 6, "User", "Inválido!")
+                .IsNotNull(User_id, "User", "Inválido!")
         );
     }
 }
